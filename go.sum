@@ -1,3 +1,5 @@
+github.com/766b/mobi v0.0.0-20170126225245-1f46d50955d2 h1:cNL5IERD3/u0ZreEZQXAiztHHfOfRnVKKh4G2/P++8Q=
+github.com/766b/mobi v0.0.0-20170126225245-1f46d50955d2/go.mod h1:ut/OVrYa64AAfis3e0GO4uEb8mwXSJoqAqnIMQd24HQ=
 github.com/matryer/is v1.3.0 h1:9qiso3jaJrOe6qBRJRBt2Ldht05qDiFP9le0JOIhRSI=
 github.com/matryer/is v1.3.0/go.mod h1:2fLPjFQM9rhQ15aVEtbuwhJinnOqrmgXPNdZsdwlWXA=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
