@@ -1,11 +1,12 @@
 package theskimm_test
 
 import (
-	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"strings"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/Tinee/newshub/theskimm"
@@ -15,18 +16,33 @@ import (
 
 func TestParser(t *testing.T) {
 	is := is.New(t)
-	err := errors.New("HesakN")
+	srv := setupTheSkimmHTTPServer(t, "theskimm.html")
+	defer srv.Close()
+
+	p := theskimm.NewParser(srv.URL)
+
+	stories, err := p.Parse()
 	is.NoErr(err)
 
-	p := theskimm.NewParser()
-
-	srv := setupTheSkimmHTTPServer(strings.NewReader(``))
-	srv.Start()
-	p.Parse()
+	is.Equal(stories.Headline, "Daily Skimm: COVID-19 Funding, Climate Change, and the Return of the Dixie Chicks")
+	is.Equal(len(stories.SubtitleToText), 12)
 }
 
-func setupTheSkimmHTTPServer(rd io.Reader) *httptest.Server {
+func setupTheSkimmHTTPServer(t *testing.T, path string) *httptest.Server {
+	path, err := filepath.Abs(fmt.Sprintf("./testdata/%s", path))
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		io.Copy(w, rd)
+		f, err := os.Open(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer f.Close()
+
+		if _, err := io.Copy(w, f); err != nil {
+			t.Fatal(err)
+		}
 	}))
 }

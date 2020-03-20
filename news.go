@@ -10,3 +10,7 @@ type Story struct {
 	Headline       string
 	SubtitleToText map[string]string
 }
+
+type Source interface {
+	Parse() (*Story, error)
+}

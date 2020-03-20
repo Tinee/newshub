@@ -19,7 +19,7 @@ func NewParser(baseURL string) *Parser {
 	}
 }
 
-func (p *Parser) Parse() ([]newshub.Story, error) {
+func (p *Parser) Parse() (*newshub.Story, error) {
 	res, err := http.Get(p.baseURL)
 	if err != nil {
 		return nil, err
@@ -32,8 +32,6 @@ func (p *Parser) Parse() ([]newshub.Story, error) {
 
 	z := html.NewTokenizer(res.Body)
 
-	var results []newshub.Story
-
 	story := newshub.NewStory()
 	var lastSubTitle string
 
@@ -43,7 +41,7 @@ func (p *Parser) Parse() ([]newshub.Story, error) {
 		switch tt {
 		case html.ErrorToken:
 			if z.Err() == io.EOF {
-				return results, nil
+				return story, nil
 			}
 
 			return nil, z.Err()
