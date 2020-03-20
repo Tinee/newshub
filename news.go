@@ -1,9 +1,12 @@
 package newshub
 
-import "time"
+func NewStory() *Story {
+	return &Story{
+		SubtitleToText: make(map[string]string),
+	}
+}
 
 type Story struct {
-	Headline string
-	Content  string
-	Date     time.Time
+	Headline       string
+	SubtitleToText map[string]string
 }

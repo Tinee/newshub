@@ -1,21 +1,28 @@
 package theskimm_test
 
 import (
+	"errors"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
+
+	"github.com/Tinee/newshub/theskimm"
+
+	"github.com/matryer/is"
 )
 
 func TestParser(t *testing.T) {
-	//is := is.New(t)
-	//err := errors.New("HesakN")
-	//is.NoErr(err)
+	is := is.New(t)
+	err := errors.New("HesakN")
+	is.NoErr(err)
 
-	//p := theskimm.NewParser()
+	p := theskimm.NewParser()
 
-	//srv := setupTheSkimmHTTPServer(strings.NewReader(``)
-	//p.Parse()
+	srv := setupTheSkimmHTTPServer(strings.NewReader(``))
+	srv.Start()
+	p.Parse()
 }
 
 func setupTheSkimmHTTPServer(rd io.Reader) *httptest.Server {
